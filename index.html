@@ -7,7 +7,7 @@
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
     <canvas id="unity-canvas" width=360 height=760 tabindex="-1" style="width: 360px; height: 760px; background: #231F20"></canvas>
-    <script src="Build/build_brotli.loader.js"></script>
+    <script src="Build/build_uncompres.loader.js"></script>
     <script>
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
@@ -26,9 +26,9 @@
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
         arguments: [],
-        dataUrl: "Build/build_brotli.data.br",
-        frameworkUrl: "Build/build_brotli.framework.js.br",
-        codeUrl: "Build/build_brotli.wasm.br",
+        dataUrl: "Build/build_uncompres.data",
+        frameworkUrl: "Build/build_uncompres.framework.js",
+        codeUrl: "Build/build_uncompres.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "Alopar",
         productName: "CryptoProto",
