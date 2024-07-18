@@ -30,14 +30,6 @@
   <body>
     <canvas id="unity-canvas" tabindex="-1"></canvas>
     <script src="Build/build_uncompress.loader.js"></script>
-    <script type="text/javascript">
-      // Функция, которая будет вызываться из Unity (C#)
-      function GetUserName(message) {
-          console.log("Message from Unity: " + message);
-          // Вызов Unity метода из JS
-          SendMessage('AppManager', 'UnityFunction', 'Hello from JS!');
-      }
-    </script>
     <script>
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
@@ -54,17 +46,35 @@
         document.body.style.textAlign = "left";
       }
 
-      createUnityInstance(document.querySelector("#unity-canvas"), {
+      var canvas = document.querySelector("#unity-canvas");
+      var config = {
         arguments: [],
         dataUrl: "Build/build_uncompress.data",
         frameworkUrl: "Build/build_uncompress.framework.js",
         codeUrl: "Build/build_uncompress.wasm",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "Alopar",
-        productName: "CryptoProto",
+        companyName: "Crypto",
+        productName: "Crypto-Proto",
         productVersion: "0.0.1",
-        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+      };
+
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => { /*...*/ })
+          .then((unityInstance) => {
+          window.unityGame = unityInstance;
+        });
+      };
+
+      window.addEventListener("message", (event) => {
+        console.log(app_id + " полученные данные:", event);
+        const receivedData = event.data;
+        if (receivedData.message === "OnInitResponse") {
+          console.log(app_id + "OnInitResponse", receivedData.data);
+          let jsonData = JSON.stringify(receivedData.data);
+          window.unityGame.SendMessage("WebSystem", "OnInitResponse", jsonData);
+        } else if (receivedData.message === "OnSetGameDataResponse") {
+          console.log(app_id + "OnSetGameDataResponse", receivedData.data);
+        }
       });
     </script>
   </body>
