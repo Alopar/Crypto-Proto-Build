@@ -58,12 +58,10 @@
         productVersion: "0.0.1",
       };
 
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => { /*...*/ })
-          .then((unityInstance) => {
-          window.unityGame = unityInstance;
-        });
-      };
+      createUnityInstance(canvas, config, (progress) => { /*...*/ })
+        .then((unityInstance) => {
+        window.unityGame = unityInstance;
+      });
 
       window.addEventListener("message", (event) => {
         console.log(app_id + " полученные данные:", event);
