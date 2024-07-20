@@ -1,3 +1,6 @@
+alert("BOOTSRAP ALERT");
+console.log("BOOTSRAP CODE");
+
 if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
     const meta = document.createElement('meta');
     meta.name = 'viewport';
