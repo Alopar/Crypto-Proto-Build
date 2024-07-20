@@ -39,9 +39,9 @@ const app_id = "undefined";
 const canvas = document.querySelector("#unity-canvas");
 const config = {
     arguments: [],
-    dataUrl: "Build/build_uncompress.data",
-    frameworkUrl: "Build/build_uncompress.framework.js",
-    codeUrl: "Build/build_uncompress.wasm",
+    dataUrl: "Build/Crypto-Proto-Build.data",
+    frameworkUrl: "Build/Crypto-Proto-Build.framework.js",
+    codeUrl: "Build/Crypto-Proto-Build.wasm",
     streamingAssetsUrl: "StreamingAssets",
     companyName: "CryptoMans",
     productName: "Crypto Prototype",
