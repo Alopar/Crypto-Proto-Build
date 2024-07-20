@@ -1,7 +1,7 @@
-alert("BOOTSRAP ALERT");
-console.log("BOOTSRAP CODE");
+console.log("BOOTSRAP CODE HEADER");
 
 if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+    console.log("IS MOBILE");
     const meta = document.createElement('meta');
     meta.name = 'viewport';
     meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
@@ -24,9 +24,11 @@ const config = {
 createUnityInstance(canvas, config, (progress) => { /*...*/ })
     .then((unityInstance) => {
     window.unityGame = unityInstance;
+    console.log("UNITY IS RUNED");
 });
 
 window.addEventListener("message", (event) => {
+    console.log("SERVER SEND REQUEST");
     console.log(app_id + " полученные данные:", event);
 
     let receivedData = event.data;
