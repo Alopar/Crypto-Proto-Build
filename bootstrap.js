@@ -1,8 +1,6 @@
-function setupMobileMode(){
-    console.log("IS MOBILE");
+function checkMobileMode(){
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        console.log("IS TRUE MOBILE");
-        const meta = document.createElement('meta');
+        let meta = document.createElement('meta');
         meta.name = 'viewport';
         meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
         document.getElementsByTagName('head')[0].appendChild(meta);
@@ -10,27 +8,26 @@ function setupMobileMode(){
 }
 
 function initializeUnityPlayer(canvas, config){
-    console.log("UNITY RUNNING");
     createUnityInstance(canvas, config, (progress) => { /*...*/ })
         .then((unityInstance) => {
-        window.unityGame = unityInstance;
+            window.unityGame = unityInstance;
     });
 }
 
 function subscribeOnServerResponses(){
     window.addEventListener("message", (event) => {
-        console.log("SERVER SEND REQUEST");
-        console.log(app_id + " полученные данные:", event);
-    
+        console.log("app_id: " + app_id + " - полученные данные:", event);
+
         let receivedData = event.data;
         switch (receivedData.message) {
             case "OnInitResponse":
+                console.log(receivedData.message + " - дата:", receivedData.data);
+
                 let jsonData = JSON.stringify(receivedData.data);
                 window.unityGame.SendMessage("ConnectorUnityToWebGL", "OnInitResponse", jsonData);
-                console.log(app_id + " " + receivedData.message, receivedData.data);
             break;
             case "OnSetGameDataResponse":
-                console.log(app_id + " " + receivedData.message, receivedData.data);
+                console.log(receivedData.message + " - дата:", receivedData.data);
             break;
             default:
                 console.log("Message incorrect :" + receivedData.message, receivedData.data);
@@ -38,9 +35,7 @@ function subscribeOnServerResponses(){
     });
 }
 
-console.log("BOOTSRAP CODE HEADER");
-
-const app_id = "n/a";
+const app_id = "undefined";
 const canvas = document.querySelector("#unity-canvas");
 const config = {
     arguments: [],
@@ -48,11 +43,11 @@ const config = {
     frameworkUrl: "Build/build_uncompress.framework.js",
     codeUrl: "Build/build_uncompress.wasm",
     streamingAssetsUrl: "StreamingAssets",
-    companyName: "Crypto",
-    productName: "Crypto-Proto",
+    companyName: "CryptoMans",
+    productName: "Crypto Prototype",
     productVersion: "0.0.1",
 };
 
-setupMobileMode();
+checkMobileMode();
 initializeUnityPlayer(canvas, config);
 subscribeOnServerResponses();
