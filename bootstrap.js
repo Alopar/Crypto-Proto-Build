@@ -25,10 +25,13 @@ function subscribeOnServerResponses(){
 
                 let jsonData = JSON.stringify(receivedData.data);
                 window.unityGame.SendMessage("ConnectorUnityToWebGL", "OnInitResponse", jsonData);
-            break;
-            case "OnSetGameDataResponse":
+                break;
+            case "OnQuestLoadResponse":
                 console.log(receivedData.message + " - дата:", receivedData.data);
-            break;
+                break;
+            case "OnQuestActionResponse":
+                console.log(receivedData.message + " - дата:", receivedData.data);
+                break;
             default:
                 console.log("Message incorrect: " + receivedData.message, receivedData.data);
         }
@@ -51,3 +54,9 @@ const config = {
 checkMobileMode();
 initializeUnityPlayer(canvas, config);
 subscribeOnServerResponses();
+
+var dataToSend = { message: "Quest", data: "load"};
+window.parent.postMessage(dataToSend, "*");
+
+var dataToSend = { message: "QuestAction", data: "quest_id"};
+window.parent.postMessage(dataToSend, "*");
