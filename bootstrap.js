@@ -30,7 +30,7 @@ function subscribeOnServerResponses(){
                 console.log(receivedData.message + " - дата:", receivedData.data);
             break;
             default:
-                console.log("Message incorrect :" + receivedData.message, receivedData.data);
+                console.log("Message incorrect: " + receivedData.message, receivedData.data);
         }
     });
 }
