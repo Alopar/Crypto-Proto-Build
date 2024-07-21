@@ -18,22 +18,19 @@ function subscribeOnServerResponses(){
     window.addEventListener("message", (event) => {
         console.log("app_id: " + app_id + " - полученные данные:", event);
 
-        let receivedData = event.data;
-        switch (receivedData.message) {
+        let message = event.data.message;
+        let receivedData = event.data.data;
+        switch (message) {
             case "OnInitResponse":
-                console.log(receivedData.message + " - дата:", receivedData.data);
-
-                let jsonData = JSON.stringify(receivedData.data);
-                window.unityGame.SendMessage("ConnectorUnityToWebGL", "OnInitResponse", jsonData);
-                break;
             case "OnQuestLoadResponse":
-                console.log(receivedData.message + " - дата:", receivedData.data);
-                break;
             case "OnQuestActionResponse":
-                console.log(receivedData.message + " - дата:", receivedData.data);
+                console.log(message + " - дата:", receivedData);
+
+                let jsonData = JSON.stringify(receivedData);
+                window.unityGame.SendMessage("ConnectorUnityToWebGL", message, jsonData);
                 break;
             default:
-                console.log("Message incorrect: " + receivedData.message, receivedData.data);
+                console.log("Message incorrect: " + message, receivedData);
         }
     });
 }
@@ -54,9 +51,3 @@ const config = {
 checkMobileMode();
 initializeUnityPlayer(canvas, config);
 subscribeOnServerResponses();
-
-var dataToSend = { message: "Quest", data: "load"};
-window.parent.postMessage(dataToSend, "*");
-
-var dataToSend = { message: "QuestAction", data: "quest_id"};
-window.parent.postMessage(dataToSend, "*");
